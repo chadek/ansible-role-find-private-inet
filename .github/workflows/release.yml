@@ -13,7 +13,7 @@ name: Release
 
 defaults:
   run:
-    working-directory: "chadek.find-private-inet"
+    working-directory: "chadek.find_private_inet"
 
 jobs:
   release:
@@ -23,7 +23,7 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v4
         with:
-          path: "chadek.find-private-inet"
+          path: "chadek.find_private_inet"
 
       - name: Set up Python 3.
         uses: actions/setup-python@v5
