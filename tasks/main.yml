@@ -1,0 +1,29 @@
+---
+- name: Find Private inet | Create a regex pattern to match similar interface names with length limitation
+  ansible.builtin.set_fact:
+    interface_pattern: >-
+      {{
+        '^' + ansible_default_ipv4.interface | regex_replace('[0-9]', '[0-9]') + '$'
+      }}
+  when: find_private_inet_guess
+
+- name: Find Private inet | Find interfaces matching the pattern, reject default interface
+  ansible.builtin.set_fact:
+    matching_interfaces: >-
+      {{
+        ansible_facts['interfaces']
+        | select('match', interface_pattern)
+        | reject('equalto', ansible_default_ipv4.interface)
+        | list
+      }}
+  when: find_private_inet_guess
+
+- name: Find Private inet | Guess private interface name
+  ansible.builtin.set_fact:
+    private_interface: "{{ matching_interfaces[0] | default(None) }}"
+  when: find_private_inet_guess
+
+- name: Provide base | Debug matching interfaces
+  ansible.builtin.debug:
+    msg: "Secondary interface matched is : {{ private_interface }}"
+  when: find_private_inet_guess

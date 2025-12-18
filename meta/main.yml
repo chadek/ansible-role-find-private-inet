@@ -1,0 +1,29 @@
+---
+galaxy_info:
+  author: "chadek"
+  description: "Identify private network interfaces by pattern matching and exclusion of the default interface."
+  company: ""
+  license: "MIT" # or another appropriate license
+  min_ansible_version: "2.9" # or the minimum version you support
+  platforms:
+    - name: EL # Enterprise Linux (RHEL, CentOS, etc.)
+      versions:
+        - 7
+        - 8
+        - 9
+    - name: Ubuntu
+      versions:
+        - noble
+        - focal
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+  galaxy_tags:
+    - networking
+    - system
+    - interfaces
+    - private
+    - ipv4
+
+dependencies: []
