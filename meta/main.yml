@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: find_private_inet
   author: "chadek"
   description: "Identify private network interfaces by pattern matching and exclusion of the default interface."
   company: ""
