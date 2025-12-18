@@ -1,9 +1,17 @@
 ---
+- name: Find Private inet | Determine default interface (IPv4 or IPv6)
+  ansible.builtin.set_fact:
+    default_interface: >-
+      {{
+        ansible_default_ipv4.interface | default(ansible_default_ipv6.interface)
+      }}
+  when: find_private_inet_guess
+
 - name: Find Private inet | Create a regex pattern to match similar interface names with length limitation
   ansible.builtin.set_fact:
     interface_pattern: >-
       {{
-        '^' + ansible_default_ipv4.interface | regex_replace('[0-9]', '[0-9]') + '$'
+        '^' + default_interface | regex_replace('[0-9]', '[0-9]') + '$'
       }}
   when: find_private_inet_guess
 
@@ -13,7 +21,7 @@
       {{
         ansible_facts['interfaces']
         | select('match', interface_pattern)
-        | reject('equalto', ansible_default_ipv4.interface)
+        | reject('equalto', default_interface)
         | list
       }}
   when: find_private_inet_guess
